@@ -2,7 +2,7 @@
 <ModSyncNinjaData>
   <ID>7904dc5e-fd68-40cf-8a1a-1657a1b15079</ID>
   <ModName>Lord of the Rims - Hobbits (Continued)</ModName>
-  <Version>1.0.0.0</Version>
+  <Version>1.0.1.0</Version>
   <SaveBreaking>False</SaveBreaking>
   <Host name="Github">
     <Owner>emipa606</Owner>
@@ -12,7 +12,3 @@
     <Branch>master</Branch>
   </Host>
 </ModSyncNinjaData>
-
-
-
-

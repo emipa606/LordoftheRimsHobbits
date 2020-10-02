@@ -66,7 +66,7 @@
     </stages>
   </ThoughtDef>
   <ThoughtDef>
-    <defName>AteCorpse</defName>
+    <defName>LotRH_AteCorpse</defName>
     <showBubble>true</showBubble>
     <icon>Things/Mote/ThoughtSymbol/Food</icon>
     <durationDays>1.0</durationDays>
@@ -82,7 +82,7 @@
   </ThoughtDef>
   <!--=========== Special nature thoughts ============-->
   <ThoughtDef>
-    <defName>AteHumanlikeMeatDirect</defName>
+    <defName>LotRH_AteHumanlikeMeatDirect</defName>
     <showBubble>true</showBubble>
     <icon>Things/Mote/ThoughtSymbol/Food</icon>
     <durationDays>1.0</durationDays>
@@ -100,7 +100,7 @@
     </stages>
   </ThoughtDef>
   <ThoughtDef>
-    <defName>AteHumanlikeMeatDirectCannibal</defName>
+    <defName>LotRH_AteHumanlikeMeatDirectCannibal</defName>
     <showBubble>true</showBubble>
     <icon>Things/Mote/ThoughtSymbol/Food</icon>
     <durationDays>1.0</durationDays>
@@ -118,7 +118,7 @@
     </stages>
   </ThoughtDef>
   <ThoughtDef>
-    <defName>AteHumanlikeMeatAsIngredient</defName>
+    <defName>LotRH_AteHumanlikeMeatAsIngredient</defName>
     <showBubble>true</showBubble>
     <icon>Things/Mote/ThoughtSymbol/Food</icon>
     <durationDays>1.0</durationDays>
@@ -136,7 +136,7 @@
     </stages>
   </ThoughtDef>
   <ThoughtDef>
-    <defName>AteHumanlikeMeatAsIngredientCannibal</defName>
+    <defName>LotRH_AteHumanlikeMeatAsIngredientCannibal</defName>
     <showBubble>true</showBubble>
     <icon>Things/Mote/ThoughtSymbol/Food</icon>
     <durationDays>1.0</durationDays>
@@ -154,7 +154,7 @@
     </stages>
   </ThoughtDef>
   <ThoughtDef>
-    <defName>AteInsectMeatDirect</defName>
+    <defName>LotRH_AteInsectMeatDirect</defName>
     <showBubble>true</showBubble>
     <icon>Things/Mote/ThoughtSymbol/Food</icon>
     <durationDays>0.5</durationDays>
@@ -168,7 +168,7 @@
     </stages>
   </ThoughtDef>
   <ThoughtDef>
-    <defName>AteInsectMeatAsIngredient</defName>
+    <defName>LotRH_AteInsectMeatAsIngredient</defName>
     <showBubble>true</showBubble>
     <icon>Things/Mote/ThoughtSymbol/Food</icon>
     <durationDays>0.5</durationDays>
@@ -183,7 +183,7 @@
   </ThoughtDef>
   <!--================== Rotten state thoughts =================-->
   <ThoughtDef>
-    <defName>AteRottenFood</defName>
+    <defName>LotRH_AteRottenFood</defName>
     <showBubble>true</showBubble>
     <icon>Things/Mote/ThoughtSymbol/Food</icon>
     <durationDays>1.0</durationDays>

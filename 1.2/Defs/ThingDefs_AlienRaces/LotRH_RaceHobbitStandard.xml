@@ -161,6 +161,38 @@
             <original>AteRawFood</original>
             <replacer>LotRH_AteRawFood</replacer>
           </li>
+          <li>
+            <original>AteCorpse</original>
+            <replacer>LotRH_AteCorpse</replacer>
+          </li>
+          <li>
+            <original>AteHumanlikeMeatDirect</original>
+            <replacer>LotRH_AteHumanlikeMeatDirect</replacer>
+          </li>
+          <li>
+            <original>AteHumanlikeMeatDirectCannibal</original>
+            <replacer>LotRH_AteHumanlikeMeatDirectCannibal</replacer>
+          </li>
+          <li>
+            <original>AteHumanlikeMeatAsIngredient</original>
+            <replacer>LotRH_AteHumanlikeMeatAsIngredient</replacer>
+          </li>
+          <li>
+            <original>AteHumanlikeMeatAsIngredientCannibal</original>
+            <replacer>LotRH_AteHumanlikeMeatAsIngredientCannibal</replacer>
+          </li>
+          <li>
+            <original>AteInsectMeatDirect</original>
+            <replacer>LotRH_AteInsectMeatDirect</replacer>
+          </li>
+          <li>
+            <original>AteInsectMeatAsIngredient</original>
+            <replacer>LotRH_AteInsectMeatAsIngredient</replacer>
+          </li>
+          <li>
+            <original>AteRottenFood</original>
+            <replacer>LotRH_AteRottenFood</replacer>
+          </li>
         </replacerList>
       </thoughtSettings>
     </alienRace>

@@ -233,3 +233,8 @@ $RECYCLE.BIN/
 
 # Rimworld specific
 _PublisherPlus.xml
+
+# specific to this mod
+/Source/Hobbits/TestSaves/Config/LastPlayedVersion.txt
+/Source/Hobbits/TestSaves/Config/Knowledge.xml
+/Source/Hobbits/TestSaves/Config/KeyPrefs.xml

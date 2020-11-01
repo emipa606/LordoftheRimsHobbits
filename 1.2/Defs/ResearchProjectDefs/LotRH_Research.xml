@@ -75,6 +75,9 @@
     <label>Party Tree</label>
     <description>A great tree! Ideal for gatherings and big speeches!</description>
     <baseCost>400</baseCost>
+    <prerequisites>
+      <li>TreeSowing</li>
+    </prerequisites>
     <researchViewX>0</researchViewX>
     <researchViewY>3</researchViewY>
   </ResearchProjectDef>

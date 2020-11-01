@@ -58,7 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Building_PartyTreeGrower.cs" />
+    <Compile Include="Plant_PartyTree.cs" />
     <Compile Include="EarthenWall.cs" />
     <Compile Include="HarmonyHobbits.cs" />
     <Compile Include="HobbitMod.cs" />

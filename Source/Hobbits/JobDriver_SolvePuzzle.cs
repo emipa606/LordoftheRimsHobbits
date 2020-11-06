@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Verse;
 using Verse.AI;
 using RimWorld;
-using UnityEngine;
 
 namespace Hobbits
 {
@@ -14,47 +12,41 @@ namespace Hobbits
         private const TargetIndex PuzzleBoxInd = TargetIndex.A;
         private const TargetIndex joySpot = TargetIndex.B;
 
-        private Thing PuzzleBox
-        {
-            get
-            {
-                return this.job.GetTarget(TargetIndex.A).Thing;
-            }
-        }
+        private Thing PuzzleBox => job.GetTarget(TargetIndex.A).Thing;
 
         public override bool TryMakePreToilReservations(bool yeaaa)
         {
-            return this.pawn.Reserve(PuzzleBox, this.job, 1, -1, null);
+            return pawn.Reserve(PuzzleBox, job, 1, -1, null);
         }
 
         protected override IEnumerable<Toil> MakeNewToils()
         {
             yield return Toils_Goto.GotoThing(PuzzleBoxInd, PathEndMode.ClosestTouch).FailOnDespawnedNullOrForbidden(PuzzleBoxInd);
-            yield return Toils_Ingest.PickupIngestible(PuzzleBoxInd, this.pawn);
+            yield return Toils_Ingest.PickupIngestible(PuzzleBoxInd, pawn);
             yield return CarryPuzzleToSpot(pawn, PuzzleBoxInd);
             yield return Toils_Ingest.FindAdjacentEatSurface(joySpot, PuzzleBoxInd);
             Toil puzzle;
             puzzle = new Toil
             {
-                tickAction = this.WaitTickAction()
+                tickAction = WaitTickAction()
             };
             puzzle.AddFinishAction(() =>
             {
-                JoyUtility.TryGainRecRoomThought(this.pawn);
-                this.RollForLuck();
+                JoyUtility.TryGainRecRoomThought(pawn);
+                RollForLuck();
             });
             puzzle.defaultCompleteMode = ToilCompleteMode.Delay;
-            puzzle.defaultDuration = this.job.def.joyDuration;
+            puzzle.defaultDuration = job.def.joyDuration;
             puzzle.handlingFacing = true;
             yield return puzzle;
         }
 
         protected void RollForLuck()
         {
-            float extraLuckFromQuality = TargetThingA.GetStatValue(StatDefOf.JoyGainFactor, true);
+            var extraLuckFromQuality = TargetThingA.GetStatValue(StatDefOf.JoyGainFactor, true);
             float extraLuckFromHobbitSmarts = pawn.skills.GetSkill(SkillDefOf.Intellectual).levelInt;
 
-            float yourLuckyNumber = ((1f + extraLuckFromHobbitSmarts) * extraLuckFromQuality) / 100;
+            var yourLuckyNumber = (1f + extraLuckFromHobbitSmarts) * extraLuckFromQuality / 100;
 
             Log.Message("lucky number is: " + yourLuckyNumber.ToString());
 
@@ -76,17 +68,17 @@ namespace Hobbits
         {
             return delegate
             {
-                this.pawn.rotationTracker.FaceCell(TargetB.Cell);
-                this.pawn.GainComfortFromCellIfPossible();
-                float extraJoyGainFactor = TargetThingA.GetStatValue(StatDefOf.JoyGainFactor, true);
-                JoyUtility.JoyTickCheckEnd(this.pawn, JoyTickFullJoyAction.EndJob, extraJoyGainFactor);
+                pawn.rotationTracker.FaceCell(TargetB.Cell);
+                pawn.GainComfortFromCellIfPossible();
+                var extraJoyGainFactor = TargetThingA.GetStatValue(StatDefOf.JoyGainFactor, true);
+                JoyUtility.JoyTickCheckEnd(pawn, JoyTickFullJoyAction.EndJob, extraJoyGainFactor);
             };
         }
 
         //slightly modified version of Toils_Ingest.CarryIngestibleToChewSpot
         public static Toil CarryPuzzleToSpot(Pawn pawn, TargetIndex puzzleInd)
         {
-            Toil toil = new Toil();
+            var toil = new Toil();
             toil.initAction = delegate
             {
                 Pawn actor = toil.actor;
@@ -119,8 +111,8 @@ namespace Hobbits
                     {
                         return false;
                     }
-                    bool result = false;
-                    for (int i = 0; i < 4; i++)
+                    var result = false;
+                    for (var i = 0; i < 4; i++)
                     {
                         IntVec3 c = t.Position + GenAdj.CardinalDirections[i];
                         Building edifice = c.GetEdifice(t.Map);

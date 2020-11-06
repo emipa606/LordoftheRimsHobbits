@@ -95,7 +95,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>LotRH_HobbitHill</defName>
     <label>Earthen hill</label>
-    <thingClass>LordOfTheRims_Hobbits.EarthenWall</thingClass>
+    <thingClass>Hobbits.EarthenWall</thingClass>
     <category>Building</category>
     <description>Hills are not as tall or as strong as natural walls, but they give great comfort to hobbits living inside them. Hills require simple dirt and soil nearby, and take time to complete. Grass can be planted upon these hills.</description>
     <uiIconPath>Things/Building/Linked/LotRH_CompactSoilGrassy_MenuIcon</uiIconPath>

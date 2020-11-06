@@ -4,12 +4,12 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 
-namespace LordOfTheRims_Hobbits
+namespace Hobbits
 {
     public class EarthenWall : Building
     {
         private bool hasGrass = false;
-        public bool HasSnow => this.MapHeld.snowGrid.GetCategory(this.PositionHeld) != SnowCategory.None;
+        public bool HasSnow => MapHeld.snowGrid.GetCategory(PositionHeld) != SnowCategory.None;
 
         private float growthInt = 0.05f;
         private int unlitTicks;
@@ -24,9 +24,14 @@ namespace LordOfTheRims_Hobbits
             get
             {
                 if (HasSnow)
-                    return this.def.building.trapUnarmedGraphicData.GraphicColoredFor(this);
+                {
+                    return def.building.trapUnarmedGraphicData.GraphicColoredFor(this);
+                }
                 else if (LifeStage == PlantLifeStage.Mature || hasGrass)
-                    return this.def.building.fullGraveGraphicData.GraphicColoredFor(this);
+                {
+                    return def.building.fullGraveGraphicData.GraphicColoredFor(this);
+                }
+
                 return base.Graphic;
             }
         }
@@ -36,11 +41,11 @@ namespace LordOfTheRims_Hobbits
         {
             get
             {
-                if (this.growthInt < 0.001f)
+                if (growthInt < 0.001f)
                 {
                     return PlantLifeStage.Sowing;
                 }
-                if (this.growthInt > 0.999f)
+                if (growthInt > 0.999f)
                 {
                     return PlantLifeStage.Mature;
                 }
@@ -54,12 +59,12 @@ namespace LordOfTheRims_Hobbits
         {
             get
             {
-                if (this.LifeStage != PlantLifeStage.Growing || this.Resting)
+                if (LifeStage != PlantLifeStage.Growing || Resting)
                 {
                     return 0f;
                 }
-                float num = 1f / (60000f * growDays);
-                return num * this.GrowthRate;
+                var num = 1f / (60000f * growDays);
+                return num * GrowthRate;
             }
         }
 
@@ -67,31 +72,31 @@ namespace LordOfTheRims_Hobbits
         {
             get
             {
-                float num = Map.glowGrid.GameGlowAt(Position, false);
+                var num = Map.glowGrid.GameGlowAt(Position, false);
                 return GenMath.InverseLerp(growMinGlow, growOptimalGlow, num);
             }
         }
         
-        protected virtual bool HasEnoughLightToGrow => this.GrowthRateFactor_Light > 0.001f;
+        protected virtual bool HasEnoughLightToGrow => GrowthRateFactor_Light > 0.001f;
 
-        private string GrowthPercentString => (this.growthInt + 0.0001f).ToStringPercent();
+        private string GrowthPercentString => (growthInt + 0.0001f).ToStringPercent();
 
         public override string LabelMouseover
         {
             get
             {
-                if (this.cachedLabelMouseover == null)
+                if (cachedLabelMouseover == null)
                 {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    stringBuilder.Append(this.def.LabelCap);
+                    var stringBuilder = new StringBuilder();
+                    stringBuilder.Append(def.LabelCap);
                     stringBuilder.Append(" (" + "PercentGrowth".Translate(new object[]
                     {
-                        this.GrowthPercentString
+                        GrowthPercentString
                     }));
                     stringBuilder.Append(")");
-                    this.cachedLabelMouseover = stringBuilder.ToString();
+                    cachedLabelMouseover = stringBuilder.ToString();
                 }
-                return this.cachedLabelMouseover;
+                return cachedLabelMouseover;
             }
         }
         
@@ -110,40 +115,35 @@ namespace LordOfTheRims_Hobbits
 
                 if (PlantUtility.GrowthSeasonNow(Position, Map))
                 {
-                    this.growthInt += this.GrowthPerTick * 2000f;
-                    if (this.growthInt > 1f)
+                    growthInt += GrowthPerTick * 2000f;
+                    if (growthInt > 1f)
                     {
-                        this.growthInt = 1f;
+                        growthInt = 1f;
                     }
                 }
-                if (!this.HasEnoughLightToGrow)
+                if (!HasEnoughLightToGrow)
                 {
-                    this.unlitTicks += 2000;
+                    unlitTicks += 2000;
                 }
                 else
                 {
-                    this.unlitTicks = 0;
+                    unlitTicks = 0;
                 }
-                this.ageInt += 2000;
-                this.cachedLabelMouseover = null;
+                ageInt += 2000;
+                cachedLabelMouseover = null;
 
             }
         }
 
-        private float GrowthRate
-        {
-            get
-            {
+        private float GrowthRate =>
                 //return this.GrowthRateFactor_Fertility * this.GrowthRateFactor_Temperature * this.GrowthRateFactor_Light;
-                return 1 * this.GrowthRateFactor_Temperature * this.GrowthRateFactor_Light;
-            }
-        }
+                1 * GrowthRateFactor_Temperature * GrowthRateFactor_Light;
 
         private float GrowthRateFactor_Temperature
         {
             get
             {
-                if (!GenTemperature.TryGetTemperatureForCell(Position, Map, out float num))
+                if (!GenTemperature.TryGetTemperatureForCell(Position, Map, out var num))
                 {
                     return 1f;
                 }
@@ -162,24 +162,24 @@ namespace LordOfTheRims_Hobbits
         
         public override string GetInspectString()
         {
-            StringBuilder stringBuilder = new StringBuilder();
-            if (this.LifeStage == PlantLifeStage.Growing)
+            var stringBuilder = new StringBuilder();
+            if (LifeStage == PlantLifeStage.Growing)
             {
                 stringBuilder.AppendLine("PercentGrowth".Translate(new object[]
                 {
-                    this.GrowthPercentString
+                    GrowthPercentString
                 }));
-                stringBuilder.AppendLine("GrowthRate".Translate() + ": " + this.GrowthRate.ToStringPercent());
-                    if (this.Resting)
+                stringBuilder.AppendLine("GrowthRate".Translate() + ": " + GrowthRate.ToStringPercent());
+                    if (Resting)
                     {
                         stringBuilder.AppendLine("PlantResting".Translate());
                     }
-                    if (!this.HasEnoughLightToGrow)
+                    if (!HasEnoughLightToGrow)
                     {
                         stringBuilder.AppendLine("PlantNeedsLightLevel".Translate() + ": " + growMinGlow.ToStringPercent());
                     }
             }
-            else if (this.LifeStage == PlantLifeStage.Mature)
+            else if (LifeStage == PlantLifeStage.Mature)
             {
                 stringBuilder.AppendLine("Mature".Translate());
             }
@@ -189,7 +189,9 @@ namespace LordOfTheRims_Hobbits
         public override IEnumerable<Gizmo> GetGizmos()
         {
             foreach (var g in base.GetGizmos())
+            {
                 yield return g;
+            }
             //if (!hasGrass)
             //{
             if (DebugSettings.godMode)
@@ -203,7 +205,7 @@ namespace LordOfTheRims_Hobbits
                     toggleAction = () =>
                     {
                         hasGrass = !hasGrass;
-                        this.DirtyMapMesh(this.MapHeld);
+                        DirtyMapMesh(MapHeld);
                     } //NeedsGrassPlanted = !NeedsGrassPlanted
                 };
             } 
@@ -213,9 +215,9 @@ namespace LordOfTheRims_Hobbits
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.Look<float>(ref this.growthInt, "growth", 0f, false);
-            Scribe_Values.Look<int>(ref this.ageInt, "age", 0, false);
-            Scribe_Values.Look<int>(ref this.unlitTicks, "unlitTicks", 0, false);
+            Scribe_Values.Look<float>(ref growthInt, "growth", 0f, false);
+            Scribe_Values.Look<int>(ref ageInt, "age", 0, false);
+            Scribe_Values.Look<int>(ref unlitTicks, "unlitTicks", 0, false);
         }
     }
 }

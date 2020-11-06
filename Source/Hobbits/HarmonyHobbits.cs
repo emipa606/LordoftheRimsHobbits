@@ -1,18 +1,10 @@
 ﻿using HarmonyLib;
 using RimWorld;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Verse;
 using Verse.AI;
-using System.Reflection;
-using Hobbits;
-using LordOfTheRims_Hobbits;
-using UnityEngine;
-using Verse.AI.Group;
 
-namespace JecsHuntingWithTraps
+namespace Hobbits
 {
 
     [StaticConstructorOnStartup]
@@ -28,13 +20,13 @@ namespace JecsHuntingWithTraps
             harmony.Patch(AccessTools.Method(typeof(Plant), "get_Graphic"), null,
                 new HarmonyMethod(typeof(HarmonyPatches), nameof(GetPartyTreeGraphic)), null);
             harmony.Patch(AccessTools.Method(typeof(CompGlower), "get_ShouldBeLitNow"), null,
-                new HarmonyMethod(typeof(HarmonyPatches), nameof(get_PartyTree_ShouldBeLitNow)), null);
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(Get_PartyTree_ShouldBeLitNow)), null);
             harmony.Patch(AccessTools.Method(typeof(WorkGiver_GrowerHarvest), "HasJobOnCell"), null,
                 new HarmonyMethod(typeof(HarmonyPatches), nameof(HasJobOnCell_PostFix)), null);
         }
 
         //CompGlower
-        public static void get_PartyTree_ShouldBeLitNow(CompGlower __instance, ref bool __result)
+        public static void Get_PartyTree_ShouldBeLitNow(CompGlower __instance, ref bool __result)
         {
             if (__instance?.parent is Plant_PartyTree p)
             {
@@ -94,7 +86,7 @@ namespace JecsHuntingWithTraps
         //RCellFinder
         public static void TryFindGatheringSpot_NewTemp_PostFix(Pawn organizer, ref IntVec3 result, ref bool __result)
         {
-            bool enjoyableOutside = JoyUtility.EnjoyableOutsideNow(organizer, null);
+            var enjoyableOutside = JoyUtility.EnjoyableOutsideNow(organizer, null);
             Map map = organizer.Map;
 
             if (map.listerThings.ThingsOfDef(ThingDef.Named("LotRH_PlantPartyTree")).Any(x => x is Plant y && y.LifeStage == PlantLifeStage.Mature))
@@ -118,7 +110,7 @@ namespace JecsHuntingWithTraps
                         return false;
                     }
                     Room room = cell.GetRoom(map, RegionType.Set_Passable);
-                    bool flag = room != null && room.isPrisonCell;
+                    var flag = room != null && room.isPrisonCell;
                     return organizer.IsPrisoner == flag && GatheringsUtility.EnoughPotentialGuestsToStartGathering(map, GatheringDefOf.Party, new IntVec3?(cell));
                 }
                 if ((from x in map.listerThings.ThingsOfDef(ThingDef.Named("LotRH_PlantPartyTree")).Where(x => x is Plant y && y.LifeStage == PlantLifeStage.Mature)
@@ -133,13 +125,19 @@ namespace JecsHuntingWithTraps
         public static void CanHaveSnow_PostFix(SnowGrid __instance, int ind, ref bool __result)
         {
             var map = Traverse.Create(__instance).Field("map").GetValue<Map>();
-            if (map == null) return;
+            if (map == null)
+            {
+                return;
+            }
+
             var building = map.edificeGrid[ind];
             if (building is EarthenWall w)
             {
                 __result = true;
                 if (Find.TickManager.TicksGame % 250 == 0)
+                {
                     w.DirtyMapMesh(w.MapHeld);
+                }
             }
         }
 

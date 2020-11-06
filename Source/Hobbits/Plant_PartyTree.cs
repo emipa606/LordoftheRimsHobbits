@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using RimWorld;
+﻿using RimWorld;
 using Verse;
 
 namespace Hobbits
@@ -20,10 +17,7 @@ namespace Hobbits
     {
         public override float Growth
         {
-            get
-            {
-                return base.Growth;
-            }
+            get => base.Growth;
             set
             {
                 base.Growth = value;
@@ -53,7 +47,11 @@ namespace Hobbits
         }
         public Thought_Memory GiveObservedThought()
         {
-            if (this.LifeStage != PlantLifeStage.Mature) return null;
+            if (LifeStage != PlantLifeStage.Mature)
+            {
+                return null;
+            }
+
             var thought_MemoryObservation = (Thought_MemoryObservation)ThoughtMaker.MakeThought(Hobbits.ThoughtDefOf.ObservedPartyTree);
             thought_MemoryObservation.Target = this;
             return thought_MemoryObservation;

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using RimWorld;
-using LordOfTheRims_Hobbits;
 using Verse;
 using Verse.AI;
 
@@ -18,27 +15,33 @@ namespace Hobbits
         public override float GetChance(Pawn pawn)
         {
             //only for hobbits!
-            if (pawn.def != DefDatabase<AlienRace.ThingDef_AlienRace>.GetNamed("LotRH_HobbitStandardRace")) return 0f;
-            else return def.baseChance;
+            if (pawn.def != DefDatabase<AlienRace.ThingDef_AlienRace>.GetNamed("LotRH_HobbitStandardRace"))
+            {
+                return 0f;
+            }
+            else
+            {
+                return def.baseChance;
+            }
         }
 
         //hobbits can puzzle during a party and when they're by themselves: hence the dual-job
         public override Job TryGiveJob(Pawn pawn)
         {
-            return this.TryGiveJobInternal(pawn, null);
+            return TryGiveJobInternal(pawn, null);
         }
 
         public override Job TryGiveJobInGatheringArea(Pawn pawn, IntVec3 partySpot)
         {
-            return this.TryGiveJobInternal(pawn, (Thing x) => !x.Spawned || GatheringsUtility.InGatheringArea(x.Position, partySpot, pawn.Map));
+            return TryGiveJobInternal(pawn, (Thing x) => !x.Spawned || GatheringsUtility.InGatheringArea(x.Position, partySpot, pawn.Map));
         }
 
         private Job TryGiveJobInternal(Pawn pawn, Predicate<Thing> extraValidator)
         {
-            Thing thing = this.BestIngestItem(pawn, extraValidator);
+            Thing thing = BestIngestItem(pawn, extraValidator);
             if (thing != null)
             {
-                return this.CreateIngestJob(thing, pawn);
+                return CreateIngestJob(thing, pawn);
             }
             return null;
         }
@@ -46,10 +49,14 @@ namespace Hobbits
         protected override Thing BestIngestItem(Pawn pawn, Predicate<Thing> extraValidator)
         {
             //Find the puzzle box.
-            bool predicate(Thing t) => (t.def == DefDatabase<ThingDef>.GetNamed("LotRH_HobbitPuzzleBox")) && pawn.CanReserve(t) && (extraValidator == null || extraValidator(t));
-            List<Thing> searchSet = new List<Thing>();
-            this.GetSearchSet(pawn, searchSet);
-            TraverseParms traverseParams = TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn, false);
+            bool predicate(Thing t)
+            {
+                return (t.def == DefDatabase<ThingDef>.GetNamed("LotRH_HobbitPuzzleBox")) && pawn.CanReserve(t) && (extraValidator == null || extraValidator(t));
+            }
+
+            var searchSet = new List<Thing>();
+            GetSearchSet(pawn, searchSet);
+            var traverseParams = TraverseParms.For(pawn, Danger.Deadly, TraverseMode.ByPawn, false);
 
             return GenClosest.ClosestThing_Global_Reachable(pawn.Position, pawn.Map, searchSet, PathEndMode.OnCell, traverseParams, 9999f, predicate, null);
         }

@@ -49,7 +49,6 @@
       </li>
     </comps>
   </ThingDef>
-
   <!-- This is the thought colonists receive if they observe the party tree. It doesn't last very long but is very effective during parties -->
   <ThoughtDef>
     <defName>ObservedPartyTree</defName>
@@ -68,7 +67,6 @@
       </li>
     </stages>
   </ThoughtDef>
-
   <ThoughtDef>
     <defName>PartyTreeDestroyed</defName>
     <showBubble>true</showBubble>

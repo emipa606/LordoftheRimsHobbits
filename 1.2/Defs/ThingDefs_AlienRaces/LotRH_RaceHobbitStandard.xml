@@ -50,7 +50,7 @@
           </pawnKindEntries>
           <factionDefs>
             <li>PlayerColony</li>
-            <li>LotRPlayerColony</li>
+            <li>LotRH_PlayerColony</li>
           </factionDefs>
         </li>
       </startingColonists>

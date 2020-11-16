@@ -5,5 +5,4 @@
   <LotR_HobbitBonuses>\t-20% Health scale\n\t-40% Body size\n\t-40% Mass\n\t-40% Carrying capacity</LotR_HobbitBonuses>
   <LotRH_PuzzleSolvedLabel>Puzzle solved!</LotRH_PuzzleSolvedLabel>
   <LotRH_PuzzleSolved>{0} has solved their puzzle. It contained {1}!</LotRH_PuzzleSolved>
-
 </LanguageData>
